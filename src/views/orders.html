@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <%- include('styles.html') %>
+    <style>
+        #order {
+            display: inline-block;
+            width: 115px;
+            height: 25px;
+            background: transparent;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            line-height: 25px;
+            text-decoration: none;
+            border: 4px solid black;            
+        }
+        #order:hover{
+            background: rgba(0, 105, 214, 0.25);
+            color: rgba(33, 128, 230, 0.918);  
+        }
+    </style>  
+</head>
+<body>
+    <%- include('partials/navbar.html') %>
+    <div id="center_div"><%=locals.message%></div>
+    <table class="darkTable">        
+    <% locals.orders.forEach(order => {%>
+        <tr>
+            <td><a id="order" href="/orders/<%=order.orderuuid%>">Order Details</a></td>
+            <td>Date of submission: <%=order.createdAt.toISOString().replace(/T/, ' ').replace(/\..+/, '')%></td>
+            <td><%- order.ispending? 'Order is pending' : 'Order is closed' %></td>
+            <%if(locals.hasAdminRights){%>
+                <td>Contact phone: <%=order.deliveryaddresses.recipientPhone%></td>
+                <td>Constact email: <%=order.deliveryaddresses.recipientEmail%></td>
+                <td>Client name: <%=order.deliveryaddresses.recipientName%></td>
+            <%}%>
+        </tr>
+    <%})%>
+    </table>
+</body>
+</html>

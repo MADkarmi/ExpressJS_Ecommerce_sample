@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <%- include('styles.html') %>    
+</head>
+<body>
+    <%- include('partials/navbar.html') %>
+    <div id="center_div">List Of Registered Users</div>
+    <table class="darkTable">
+        <tr>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Phone number</th>
+            <th>Adress</th>
+            <th>Has Admin Rights</th>
+        </tr>
+    <% locals.users.forEach(user => {%>
+        <tr>
+            <td><%=user.email%></td>
+            <td><%=user.name%></td>
+            <td><%=user.surname%></td>
+            <td><%=user.phone%></td>
+            <td><%=user.adress%></td>
+            <td><%=user.isadmin%></td>
+        </tr>
+    <%})%>
+    </table>
+</body>
+</html>

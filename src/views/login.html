@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <%- include('styles.html') %>
+    <link rel="stylesheet" href="./css/accountForms.css">
+</head>
+
+<body>
+    <% if(locals.message) {%>
+        <label class="allert-label" ><b><%=locals.message%></b></label><br>
+    <%}%>  
+    <form class="container" action="/login" method="post">        
+        <div class="container">
+            <label for="email"><b>Email</b></label>
+            <input type="text" placeholder="Enter Username" name="email" required>                       
+            <label for="password"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" required>
+            <button type="submit" title="Login" title="login">Login</button>                         
+        </div>
+    </form>
+    <div class="container">
+        <a href="/">
+            <button class="navbtn fas fa-home" title="Navigate to homepage"></button>
+        </a>
+        <a href="/createaccount">
+            <button class="navbtn" title="Navigate to create account form" >Create account</button>
+        </a>
+    </div>    
+</body>
+
+</html>

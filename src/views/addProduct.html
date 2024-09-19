@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <%- include('styles.html')%>
+
+    <link rel="stylesheet" href="/css/addEditProduct.css">
+        
+</head>
+
+<body>
+    <%- include('partials/navbar.html')%>    
+
+    <%if(!locals.renderSubmit){%>
+    <form class="container" action="/product/add" method="post" enctype="multipart/form-data">
+        <% if(locals.message) {%>
+            <label class="allert-label"><b>
+                    <%=locals.message%>
+                </b></label><br>
+        <%}%>
+        <label for="productname"><b>Product name</b></label>
+        <input class="input-general input-fullwidth" type="text" placeholder="Enter product name" name="productname" 
+            maxlength="100" required value="<%=locals.productname%>" <% if(locals.productNotInDB){ %> readonly <% } %>>
+        
+        <%if(locals.productNotInDB){%>
+        <label for="productdescription"><b>Product description</b></label>
+        <textarea class="input-general input-fullwidth" style="resize: vertical; height:170px" type="text"
+            placeholder="Enter product description" name="productdescription" required ><%=locals.productdescription%></textarea>
+        
+        <label for="isavailable"><b>Check if product is aviable for purchase</b></label>
+        <input class="input-general" type="checkbox" name="isavailable" value="productisaviable" <%if(locals.isavailable){%> checked <%}%> > <br>
+        
+        <label for="productprice"><b>Product price</b></label>
+        <input class="input-general input-fullwidth" type="number"  min="1" max="99999.99" step="0.01" 
+             placeholder="Enter product price (default 99999.99)" name="productprice" value="<%=locals.productprice%>">
+
+        <input class="input-general" type="file" name='productPhotos' accept="image/x-png,image/jpeg" required multiple>
+        <%}%>
+        <button style="float: right;" type="submit">Verify</button>
+    </form>
+    <%}else{%>
+        <%- include('partials/submitProduct.html')%>
+    <%}%>
+</body>
+
+</html>

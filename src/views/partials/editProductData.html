@@ -1,0 +1,28 @@
+<form method="post">    
+    <div class="div-general">
+        <label for="productname"><b>Product name</b></label>
+        <input class="input-general input-fullwidth" type="text" placeholder="Enter product name" name="productname" 
+        maxlength="100" required value="<%=locals.productname%>">            
+    </div>
+    <div class="div-general">            
+        <label for="productdescription"><b>Product description</b></label>
+        <textarea class="input-general input-fullwidth" style="resize: vertical; height:170px" type="text"
+        placeholder="Enter product description" name="productdescription" required ><%=locals.productdescription%></textarea>
+
+    </div>
+    <div class="div-general">
+        <label for="isavailable"><b>Check if product is aviable for purchase</b></label>
+        <input class="input-general" type="checkbox" name="isavailable" value="1" <%if(locals.isavailable){%> checked <%}%>>
+    </div>
+    <div class="div-general">
+        <label for="productprice"><b>Product price</b></label>
+        <input class="input-general input-fullwidth" type="number"  min="1" max="99999.99" step="0.01" 
+        placeholder="Enter product price" name="productprice" value="<%=locals.productprice%>" required>
+    </div>
+    <input type="hidden" name="editProductData" value="true">
+    <button formaction="/product/edit" style="float: right;" type="submit">Save</button>
+</form>
+
+
+    
+    

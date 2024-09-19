@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check your order</title>    
+    <%- include('styles.html')%>
+    <link rel="stylesheet" href="/css/addEditProduct.css">
+    <style>
+        table.darkTable tbody td{
+            font-size: xx-large;
+        }
+        table.darkTable tbody td input{
+            -webkit-appearance: none;
+            font-size: xx-large;
+            width:70px;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/navbar.html')%>    
+        <table class="darkTable">
+            <tr>
+                <th>Product name</th>
+                <th>Quantity</th>
+                <th>Price per item</th>
+                <th>Subtotal</th>
+            </tr>        
+            <%            
+            var totalPrice = 0;
+            locals.order.items.forEach(item=> {%>
+            <tr>
+                <td><%=item.productName%></td>
+                <td><%=item.quantity%></td>
+                <td><%=parseFloat(item.price).toFixed(2)%>$</td>
+                <td><%=(item.quantity*item.price).toFixed(2)%>$</td>                
+            </tr>
+                      
+            <%totalPrice += item.quantity*item.price })%>
+        </table>
+        <div id="center_div" style="float: right; margin-right:150px;" >
+            Total: <%=totalPrice.toFixed(2)%>$
+        </div>
+        
+        <div id="center_div" style="margin-top: 50px;">
+            <label><%- locals.order.ispending? 'Order is pending' : 'Order is closed' %></label>
+            <%if(locals.order.ispending && hasAdminRights){%>
+                <form action="/closeOrder" method="post">
+                    <input type="hidden" name="uuid" value="<%=locals.order.orderuuid%>">
+                    <button style="float: none;" type="submit">Close Order</button>
+                </form>
+            <%}%>
+                
+        </div>
+        <div id="center_div" style="margin-top: 50px;">
+            <label> Shipping information</label>
+        </div>
+
+        <div class="div-general">
+            Contact Email: <%=locals.order.deliveryaddresses.recipientEmail%>
+        </div>
+        <div class="div-general">
+            Recipient Name: <%=locals.order.deliveryaddresses.recipientName%>
+        </div>
+        <div class="div-general">
+            Recipient Surame: <%=locals.order.deliveryaddresses.recipientSurname%>
+        </div>
+        <div class="div-general">
+            Contact Phone: <%=locals.order.deliveryaddresses.recipientPhone%>
+        </div>
+        <div class="div-general">
+            City: <%=locals.order.deliveryaddresses.recipientCity%>
+        </div>
+        <div class="div-general">
+            Postal Code: <%=locals.order.deliveryaddresses.recipientPostalcode%>
+        </div>        
+        <div class="div-general">
+            Delivery Address: <%=locals.order.deliveryaddresses.recipientDeliveryadress%>
+        </div>     
+</body>
+</html>

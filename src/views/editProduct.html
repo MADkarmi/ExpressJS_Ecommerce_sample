@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product</title>
+    <%- include('styles.html')%>
+    <link rel="stylesheet" href="/css/addEditProduct.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <%if(locals.message){%>
+        <div id="center_div">
+            <%=locals.message%>
+        </div>        
+    <%}%>
+
+    <%if(locals.renderButtons){%>
+        <div class="container">
+            
+            <form action="/product/edit" method="post">
+                <input type="hidden" name="goToProduct" value="true">
+                <button type="submit">Back To Product</button>
+            </form>
+
+            <form action="/product/edit" method="post">
+                <input type="hidden" name="editProductData" value="true">
+                <button type="submit">Edit Product Data</button>
+            </form>
+            <form action="/product/edit" method="post">
+                <input type="hidden" name="thumbnailChoice" value="true">
+                <button type="submit">Change thumbnail</button>
+            </form>
+            <form action="/product/edit" method="post">
+                <input type="hidden" name="addPhotos" value="true">
+                <button type="submit">Add Photos</button>
+            </form>
+            <%if(locals.canDeletePhoto){%>
+            <form action="/product/edit" method="post">
+                <input type="hidden" name="deletePhotos" value="true">
+                <button type="submit">Delete Photos</button>
+            </form>
+            <%}%>            
+            <form action="/product/edit" method="post">
+                <input type="hidden" name="deleteProduct" value="true">
+                <button type="submit">Delete Product</button>
+            </form>
+        </div>        
+    <%}%>
+    
+    <%if(locals.renderEditProductData){%>        
+        <div class="container">
+            <%- include('partials/editProductData.html')%>
+        </div>
+    <%}%>
+    
+    <%if(locals.renderDeletePhotos){%>
+        <div class="container">
+            <%- include('partials/deleteProductPhotos.html')%>
+        </div>
+    <%}%>
+
+    <%if(locals.renderThumbnailChoice){%>
+        <div class="container">
+            <%- include('partials/thumbnailChoice.html')%>
+        </div>
+    <%}%>
+    
+    <%if(locals.renderAddPhotos){%>
+        <div class="container">
+            <%- include('partials/addPhotosForProduct.html')%>
+        </div>
+    <%}%>
+    
+
+</body>
+</html>

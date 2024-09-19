@@ -1,0 +1,29 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<div class="div-info">Select thumbnail for product, otherwise first will be picked by default</div>
+    <form action="/product/edit" method="post" class="container" >
+        <div id="images">     
+            <%for(var i = 0; i < locals.productPhotos.length; i++){%>
+                <img id="<%=i%>" src="<%=productPhotos[i].image%>" alt="" style="height: 200px; width: 200; padding: 5px;" />        
+            <%}%>
+        </div>
+        <input type="hidden" name="thumbnail" id="thumbnail" >
+        <input type="hidden" name="thumbnailChoice" value="true">
+            <button type="submit">Save change</button>
+    </form>        
+<script>
+    $ (() => {
+        var images = document.getElementById("images");
+        for (var i = 0; i < images.children.length; i ++) {
+            ((i) => {
+                images.children[i].addEventListener("click", () => {
+                    for(var j = 0; j < images.children.length; j++){
+                        document.getElementById(j).style.border = 'none'
+                    }
+                    document.getElementById(i).style.border = 'solid 5px #a5b818'
+                    document.getElementById("thumbnail").value = images.children[i].id
+                    });
+            })(i);
+        }
+    })
+</script>

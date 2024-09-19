@@ -1,0 +1,33 @@
+.input-general{                
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.input-fullwidth{    
+    width: 100%;           
+}
+
+.div-general{
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: white;
+    color: black;
+}
+
+.div-info{
+    color: #ccc;
+}
+
+input:hover{
+    cursor: pointer
+}
+.container{
+    padding: 20px;
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check your order</title>    
+    <%- include('styles.html')%>
+    <link rel="stylesheet" href="/css/addEditProduct.css">
+    <style>
+        table.darkTable tbody td{
+            font-size: xx-large;
+        }
+        table.darkTable tbody td input{
+            -webkit-appearance: none;
+            font-size: xx-large;
+            width:70px;
+        }
+    </style>
+</head>
+<body>
+    
+        <table class="darkTable">        
+            <%locals.products.forEach(product=> {%>
+            <tr>
+                <td><img style="width: 100px; height: 100px;" src="<%=product.photos[0].image.toString()%>" alt="" /></td>
+                <td><%=product.name%></td>
+                <td><%=locals.productsQuantities[product.id]%></td>
+                <td><%=product.price.toFixed(2)%>$</td>
+                <td><%=(product.price*productsQuantities[product.id]).toFixed(2)%>$</td>                
+            </tr>            
+            <%})%>
+        </table>
+        <div id="center_div" style="float: right; margin-right:150px;" >
+            Total: <%=locals.totalPrice.toFixed(2)%>$
+        </div>           
+        <div id="center_div" style="margin-top: 50px;">
+            <label> Shipping information</label>
+        </div>
+
+        <div class="div-general">
+            Contact Email: <%=locals.userDeliveryData.recipientEmail%>
+        </div>
+        <div class="div-general">
+            Recipient Name: <%=locals.userDeliveryData.recipientName%>
+        </div>
+        <div class="div-general">
+            Recipient Surame: <%=locals.userDeliveryData.recipientSurname%>
+        </div>
+        <div class="div-general">
+            Contact Phone: <%=locals.userDeliveryData.recipientPhone%>
+        </div>
+        <div class="div-general">
+            City: <%=locals.userDeliveryData.recipientCity%>
+        </div>
+        <div class="div-general">
+            Postal Code: <%=locals.userDeliveryData.recipientPostalcode%>
+        </div>        
+        <div class="div-general">
+            Delivery Address: <%=locals.userDeliveryData.recipientDeliveryadress%>
+        </div> 
+    <form class="container"  method="post">       
+        <button style="float: right;"  formaction="/createorder">Place your order</button>
+    </form>
+</body>
+</html>

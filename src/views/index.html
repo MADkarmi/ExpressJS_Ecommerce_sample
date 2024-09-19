@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrandShop</title>
+    <%- include('styles.html') %>
+</head>
+
+<body>
+    <%- include('partials/navbar.html') %>
+
+        <% if(locals.products.length> 0) {%>
+            <ul class="thumbnails">                             
+                <% locals.products.forEach(product=> { %>
+                    <% if(locals.hasAdminRights || product.isavailable){ %>
+                        <li>
+                            <div class="thumbnail">
+                                <a href="/product/<%=product.id%>">
+                                    <img src="<%=product.photos[0].image.toString()%>" alt="" />                                
+                                </a>
+                                <div class="caption">
+                                    <h4 style="text-align:center">
+                                        <div>
+                                            <%=product.name%>
+                                        </div>                                    
+                                        <div>                                            
+                                            <label for="price">Price: <%=product.price.toFixed(2)%>$</label>                                                                                                                                                        
+                                        </div>
+                                    </h4>
+                                </div>
+                            </div>
+                        </li>
+                    <% }}) %>
+            </ul>
+            <% } else { %>
+                <p>We're sorry, but currently we're out of stock</p>
+                <% } %>
+</body>
+
+</html>

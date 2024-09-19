@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=locals.name%> </title>
+    <%- include('styles.html') %>
+    <link rel="stylesheet" href="/css/product.css">
+      
+    <%if(locals.isloggedin){%>
+    <script>        
+        window.addEventListener('load', () => {            
+            document.getElementById('addToCart')
+                .addEventListener('click', ()=> {
+                let content = document.getElementById('cart');                
+                let param = document.getElementById('productid');
+                let req = new XMLHttpRequest();
+                req.open('post', '/addtocart', true);                
+                req.onreadystatechange = () => {
+                    if (req.readyState == XMLHttpRequest.DONE) {
+                        content.innerHTML = req.responseText+'<i class="fas fa-shopping-cart"></i>';
+                    }
+                }
+                let form = new FormData();
+                form.append('productid', <%=locals.id%>);
+                req.send(form);                
+            });
+        });        
+    </script>
+    <%}%>
+</head>
+
+<body>
+    <%- include('partials/navbar.html') %>
+    <div class="center product-name">
+        <%=locals.name%>               
+    </div>
+    <div class="center product-price">
+        <%=locals.isavailable? 'Product Avilable,' : 'Product Unavilable,'%>        
+        Price: <%=locals.price + locals.currency%>         
+    </div>
+    <div class="slideshow-container">
+        <%for(var i = 0; i < photos.length; i++){%>
+            <div class="slides fade">
+                <div class="numbertext"><% `${i}/${photos.length}` %></div>
+                <img src="<%=photos[i].image.toString()%>" style="width:100%"> 
+            </div>
+        <%}%>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>   
+    </div>
+    <br>
+    <div style="text-align:center">
+        <%for(var i = 0; i < photos.length; i++){%>
+            <span class="dot" onclick="currentSlide(<%=i+1%>)"></span> 
+        <%}%>    
+    </div>
+    <br>
+    <% if(locals.isloggedin){%> 
+        <form method="post">
+            <input type="hidden" name="buyNow" value="true">
+            <input type="hidden" name="productid" value="<%=locals.id%>">
+            <div class="center">
+                <% if(locals.isavailable){%>
+                <button type="button" id="addToCart" style='float: none;'>Add to cart</button>
+                <button type="submit" formaction="/ordersummary" id="buyNow" style='float: none;'>Buy Now</button>
+                <%}%>                
+            </div>
+        </form>
+    <%}%>
+    <% if(locals.isloggedin && locals.hasAdminRights){%>
+        <div class="center">
+            <form action="/product/edit" method="post">
+                <input type="hidden" name="productid" value="<%=locals.id%>">
+                <button type="submit" id="edit" style='float: none;'>Edit</button>
+            </form>
+        </div>
+    <%}%>
+    <div class="center product-description" style="margin:40px">
+        <%=locals.description%>        
+    </div>
+
+    <script>
+        var slideIndex = 1;
+        showSlides(slideIndex);
+        
+        function plusSlides(n) {
+          showSlides(slideIndex += n);
+        }
+        
+        function currentSlide(n) {
+          showSlides(slideIndex = n);
+        }
+        
+        function showSlides(n) {          
+            var slides = document.getElementsByClassName("slides");
+            var dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = slides.length
+            }
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+        }
+    </script>  
+    
+</body>
+
+</html>

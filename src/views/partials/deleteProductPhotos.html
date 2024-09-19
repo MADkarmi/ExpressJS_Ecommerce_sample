@@ -1,0 +1,21 @@
+
+
+<br>
+<form action="/product/edit" method="post">
+    <div id="images">
+        <table>            
+            <%for(var photo in locals.productPhotos){%>
+                <tr>
+                    <td><img src="<%=locals.productPhotos[photo].image%>" alt="" style="height: 200px; width: 200; padding: 5px;" /></td>
+                    <td><input type="checkbox" name="photosToDelete" value="<%=locals.productPhotos[photo].id%>"></td>
+                </tr>
+            <%}%>            
+        </table>
+    </div>
+    <input type="hidden" name="deletePhotosFirstLoad" value="false">
+    <input type="hidden" name="deletePhotos" value="true">
+    <button type="submit">Delete Selected</button>
+</form>
+<form action="/product/edit" method="post">
+    <button type="submit">Cancel</button>
+</form>

@@ -1,0 +1,43 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<form class="container" method="post">
+    <div  class="div-general">
+        Product name: <%= locals.productname%>
+    </div>
+    <div  class="div-general">
+        Product description: <%= locals.productdescription%>
+    </div>
+    <div  class="div-general">
+        Product availability: <%- locals.productavaiable? 'Product is available' : 'Product is unavailable' %>
+    </div>
+    <div  class="div-general">
+        Product Price: <%= locals.productprice%>
+    </div>
+
+    <div class="div-info">Select thumbnail for product, otherwise first will be picked by default</div>
+    <div id="images">
+        <%for(var i = 0; i < locals.productPhotos.length; i++){%>
+            <img id="<%=i%>" src="<%=productPhotos[i]%>" alt="" style="height: 200px; width: 200; padding: 5px;" />        
+        <%}%>
+    </div>
+    <input type="hidden" name="edit" value="true">
+    <input type="hidden" name="thumbnail" id="thumbnail" >
+            
+    <button formaction="/product/submitproduct" style="float: right;" type="submit">Add Product</button>
+    <button formaction="/product/add" style="float: right;" type="submit">Edit Values</button>
+</form>
+<script>
+    $ (() => {
+        var images = document.getElementById("images");
+        for (var i = 0; i < images.children.length; i ++) {
+            ((i) => {
+                images.children[i].addEventListener("click", () => {
+                    for(var j = 0; j < images.children.length; j++){
+                    document.getElementById(j).style.border = 'none'
+                }
+                    document.getElementById(i).style.border = 'solid 5px #a5b818'
+                    document.getElementById("thumbnail").value = images.children[i].id
+                });
+            })(i);
+        }
+    })
+</script>

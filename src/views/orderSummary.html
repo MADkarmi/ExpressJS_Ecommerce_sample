@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrderSummary</title>
+    <%- include('styles.html') %>
+    <link rel="stylesheet" href="./css/accountForms.css">
+    <style>
+        table.darkTable tbody td{
+            font-size: xx-large;
+        }
+        table.darkTable tbody td input{
+            -webkit-appearance: none;
+            font-size: xx-large;
+            width:70px;
+        }
+    </style>
+
+    <script>        
+        window.addEventListener('load', () => {            
+            document.getElementById('quantityinput')
+                .addEventListener('keypress', (event)=> {
+                    event.preventDefault();         
+            });            
+        });        
+    </script>
+
+</head>
+<body>
+    <div class="navbar">
+        <a class="fas fa-home" title="Navigate to homepage" href="/"></a>
+    </div>    
+    <br>
+    <br>
+    <form action="/verifyorder" method="post">
+        <table class="darkTable">        
+            <%locals.products.forEach(product=> {%>
+            <tr> 
+                <input type="hidden" name="productids" value="<%=product.id%>">           
+                <td><img style="width: 100px; height: 100px;" src="<%=product.photos[0].image.toString()%>" alt="" /></td>
+                <td><%=product.name%></td>
+                <td><input type="number" id="quantityinput" name="quantities" required min="0" max="25"  value="<%=locals.productsQuantities[product.id]%>"></td>
+                <td><%=product.price.toFixed(2)%>$</td>                
+            </tr>            
+            <%})%>
+        </table>        
+        <br>
+        <br>
+        <div id="center_div">
+            <label> Shipping information</label>
+            <br>
+            <label style="background-color: lightblue; color: red;"><%=locals.message%></label> 
+        </div>
+        
+        <div class="container">        
+            <label for="recipientEmail">Contact Email</label>
+            <input type="text" name="recipientEmail"  placeholder="Enter email" 
+                patern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" maxlength="50"
+                title="Must be in the following order: characters@characters.domain"
+                required value="<%=locals.userDeliveryData.recipientEmail%>">
+            
+            <label for="recipientName">Name</label>
+            <input type="text" name="recipientName" placeholder="Enter name"
+                patern="[a-zA-Z]" maxlength="50" 
+                required value="<%=locals.userDeliveryData.recipientName%>">
+
+            <label for="recipientSurname">Surname</label>
+            <input type="text" name="recipientSurname"  placeholder="Enter Surname"
+                patern="[a-zA-Z]" maxlength="50" required 
+                value="<%=locals.userDeliveryData.recipientSurname%>">
+
+            <label for="recipientPhone">Contact phone</label>
+            <input type="text" name="recipientPhone" pattern="[0-9]{9}" maxlength="9"
+                title="Must be in the following style: 123456789" required
+                value="<%=locals.userDeliveryData.recipientPhone%>">
+
+            <label for="recipientPostalcode">Postal code</label>
+            <input type="text" name="recipientPostalcode" placeholder="Enter postal code _ _- _ _ _"
+                pattern="[0-9]{2}-[0-9]{3}" maxlength="6" required
+                value="<%=locals.userDeliveryData.recipientPostalcode%>">
+
+            <label for="recipientCity">City</label>
+            <input type="text" name="recipientCity" placeholder="Enter city"
+                patern="[a-zA-Z]" maxlength="30" required
+                value="<%=locals.userDeliveryData.recipientCity%>">
+
+            <label for="recipientDeliveryadress">Delivery adress</label>
+            <input type="text" name="recipientDeliveryadress" placeholder="Enter delivery adress"
+                maxlength="100" required value="<%=locals.userDeliveryData.recipientDeliveryadress%>">
+        </div>
+
+
+        <div style="float: right;" >        
+            <button>Verify your order</button>
+        </div>
+    </form>
+</body>
+</html>

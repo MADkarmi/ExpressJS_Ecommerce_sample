@@ -1,0 +1,45 @@
+<script>
+    $("label").prop("title", function () {
+        return $(this).text();
+    });
+</script>
+
+<div class="navbar">
+    <a class="fas fa-home" title="Navigate to homepage" href="/"></a>
+
+    <%if(!locals.isloggedin){%>
+    <a class="button" title="Navigate to login page" href="/login">Login</a>
+    <%} else {%>
+
+        <!-- <a title="Navigate to your shopping cart" href="/shopingcart" id='cart'><%=locals.cartsize%><i class="fas fa-shopping-cart"></i></a> -->
+
+    <form action="/ordersummary" method="post">
+        <button id='cart' type="submit" class="button" style="border: none; margin-top: 0;" title="Navigate to your shopping cart"><%=locals.cartsize%><i class="fas fa-shopping-cart"></i></button>
+    </form>
+
+    <a class="button" title="Navigate to login page" href="/logout">Logout</a>
+
+        <!-- <form action="/logout" method="post">
+            <button type="submit" class="button fas fa-sign-out-alt" title="Logout" style="border: none;" >Logout</button>
+        </form> -->
+
+        <div class="dropdown">
+            <button class="dropbtn"><i class="fas fa-bars"></i></button>
+            <div class="dropdown-content">
+                <%if(locals.hasAdminRights){%>
+                    <a href="/product/add"> Add Product </a>
+                    <a href="/listallusers"> All Users </a>
+                <%}%>
+
+                <a href="/orders">Orders</a>
+                <a href="/orders/pending">Pending Orders</a>
+            </div>
+        </div>
+    <%}%>
+    <div class="search-container">
+        <form action="/" method="POST">
+            <input type="text" placeholder="Search for product..." title="Search by name or description" name="searchPhrase">
+            <button type="submit" class="fas fa-search"></button>
+        </form>
+    </div>
+</div>
